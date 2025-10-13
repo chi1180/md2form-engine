@@ -1,0 +1,217 @@
+{
+  "title": "サンプルフォーム",
+  "pages": [
+    {
+      "title": "基本情報セクション",
+      "description": "個人情報に関する質問です。",
+      "elements": [
+        {
+          "type": "short_text",
+          "description": "お名前を入力してください",
+          "placeholder": "\"山田 太郎\""
+        },
+        {
+          "type": "long_text",
+          "description": "自己紹介をお願いします",
+          "placeholder": "\"趣味や特技を書いてください\"",
+          "rows": [
+            "5"
+          ]
+        },
+        {
+          "type": "number",
+          "description": "年齢を入力してください",
+          "min": 0,
+          "max": 120
+        },
+        {
+          "type": "email",
+          "description": "メールアドレスを入力してください",
+          "placeholder": "\"example@example.com\""
+        },
+        {
+          "type": "phone",
+          "description": "電話番号を入力してください",
+          "placeholder": "\"090-1234-5678\""
+        }
+      ]
+    },
+    {
+      "title": "選択式セクション",
+      "description": "複数の選択肢形式を含みます。",
+      "elements": [
+        {
+          "type": "dropdown",
+          "description": "性別を選択してください",
+          "options": [
+            "\"男性\"",
+            "\"女性\"",
+            "\"その他\""
+          ]
+        },
+        {
+          "type": "radio",
+          "description": "好きな飲み物を1つ選んでください",
+          "options": [
+            "\"コーヒー\"",
+            "\"紅茶\"",
+            "\"水\"",
+            "\"その他\""
+          ]
+        },
+        {
+          "type": "checkbox",
+          "description": "興味のある分野をすべて選択してください",
+          "options": [
+            "\"AI\"",
+            "\"ロボット\"",
+            "\"数学\"",
+            "\"芸術\"",
+            "\"その他\""
+          ]
+        }
+      ]
+    },
+    {
+      "title": "日時セクション",
+      "description": "日付や時間に関する質問です。",
+      "elements": [
+        {
+          "type": "date",
+          "description": "生年月日を入力してください"
+        },
+        {
+          "type": "time",
+          "description": "面談希望時間を選択してください",
+          "minTime": "\"09:00\"",
+          "maxTime": "\"18:00\""
+        }
+      ]
+    },
+    {
+      "title": "評価セクション",
+      "description": "スケールや評価関連です。",
+      "elements": [
+        {
+          "type": "rating",
+          "description": "このサービスを星で評価してください",
+          "scale": 5,
+          "labels": {
+            "low": "\"低い\"",
+            "high": "\"高い\""
+          },
+          "icon": "star"
+        },
+        {
+          "type": "likert",
+          "description": "授業の満足度をお答えください",
+          "statements": [
+            "\"教材の分かりやすさ\"",
+            "\"講師の説明\"",
+            "\"演習量\""
+          ],
+          "scaleLabels": [
+            "\"全くそう思わない\"",
+            "\"あまりそう思わない\"",
+            "\"普通\"",
+            "\"そう思う\"",
+            "\"とてもそう思う\""
+          ]
+        },
+        {
+          "type": "matrix",
+          "description": "週ごとの活動時間を記入してください",
+          "rows": [
+            "\"月曜\"",
+            "\"火曜\"",
+            "\"水曜\"",
+            "\"木曜\"",
+            "\"金曜\""
+          ],
+          "columns": [
+            "\"午前\"",
+            "\"午後\"",
+            "\"夜\""
+          ],
+          "cellType": "number"
+        },
+        {
+          "type": "scale",
+          "description": "英語スキルを自己評価してください",
+          "min": 1,
+          "max": 10,
+          "minLabel": "\"初心者\"",
+          "maxLabel": "\"上級者\""
+        }
+      ]
+    },
+    {
+      "title": "ファイル/署名セクション",
+      "description": "",
+      "elements": [
+        {
+          "type": "file_upload",
+          "description": "履歴書をアップロードしてください",
+          "allowedTypes": [
+            "\"pdf\"",
+            "\"docx\""
+          ],
+          "maxFiles": 1,
+          "maxSizeMB": 10
+        },
+        {
+          "type": "signature",
+          "description": "サインをお願いします",
+          "captureMode": "draw"
+        }
+      ]
+    },
+    {
+      "title": "メディア/情報セクション",
+      "description": "",
+      "elements": [
+        {
+          "type": "section_header",
+          "description": "追加情報",
+          "title": "\"お知らせ\"",
+          "subtitle": "\"下記内容をご確認ください\""
+        },
+        {
+          "type": "image",
+          "description": "サンプル画像",
+          "src": "\"https://example.com/sample.jpg\"",
+          "alt": "\"サンプル画像\"",
+          "caption": "\"説明用の画像です\""
+        },
+        {
+          "type": "video",
+          "description": "サンプル動画",
+          "src": "\"https://example.com/sample.mp4\"",
+          "caption": "\"紹介動画です\""
+        }
+      ]
+    },
+    {
+      "title": "最後の質問",
+      "description": "",
+      "elements": [
+        {
+          "type": "boolean",
+          "description": "このサービスをまた利用したいですか？",
+          "onLabel": "\"はい\"",
+          "offLabel": "\"いいえ\""
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "collectEmail": true,
+    "allowMultipleResponses": false,
+    "showProgressBar": true,
+    "shuffleQuestions": false,
+    "themeColor": "blue",
+    "backgroundImage": "mountain",
+    "responseReceipt": "whenRequested"
+  },
+  "description": "このフォームは、すべての質問タイプを網羅するデモです。"
+}

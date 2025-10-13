@@ -84,7 +84,7 @@ responseReceipt: whenRequested
 
 ### 生年月日を入力してください
 
-## #type date
+#type date
 
 ### 面談希望時間を選択してください
 
@@ -159,13 +159,6 @@ responseReceipt: whenRequested
 #type section_header
 #title "お知らせ"
 #subtitle "下記内容をご確認ください"
-
----
-
-### 説明文
-
-#type html
-#html "<p>このフォームはデモ用です。</p>"
 
 ---
 

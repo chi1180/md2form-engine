@@ -51,12 +51,12 @@ export type ElementType =
   | "matrix" // Grid (row x column)
   | "file_upload"
   | "section_header"
-  | "html" // Custom HTML/Description
   | "scale" // Number scale (e.g., 1-5)
   | "signature"
   | "image"
   | "video"
-  | "boolean"; // yes/no toggle
+  | "boolean" // yes/no toggle
+  | "unknown"; // Fallback for unknown types
 
 export type FormElement =
   | ShortText
@@ -74,11 +74,11 @@ export type FormElement =
   | MatrixField
   | FileUploadField
   | SectionHeader
-  | HTMLBlock
   | ScaleField
   | SignatureField
   | MediaField
-  | BooleanField;
+  | BooleanField
+  | UnknownElement;
 
 // --- Elements ---
 
@@ -93,7 +93,6 @@ export type LongText = FormElementBase & {
   type: "long_text";
   placeholder?: string;
   maxLength?: number;
-  rows?: number;
   default?: string;
   richText?: boolean;
 };
@@ -124,7 +123,7 @@ export type PhoneField = FormElementBase & {
 
 export type DropdownField = FormElementBase & {
   type: "dropdown";
-  options: Option[];
+  options: string[];
   allowOther?: boolean;
   multiple?: false;
   default?: string | null;
@@ -133,14 +132,14 @@ export type DropdownField = FormElementBase & {
 
 export type RadioField = FormElementBase & {
   type: "radio";
-  options: Option[];
+  options: string[];
   allowOther?: boolean;
   default?: string | null;
 };
 
 export type CheckboxField = FormElementBase & {
   type: "checkbox";
-  options: Option[];
+  options: string[];
   minSelected?: number | null;
   maxSelected?: number | null;
   default?: string[] | null;
@@ -214,11 +213,6 @@ export type SectionHeader = FormElementBase & {
   subtitle?: string;
 };
 
-export type HTMLBlock = FormElementBase & {
-  type: "html";
-  html: string;
-};
-
 export type MediaField = FormElementBase & {
   type: "image" | "video";
   src: string; // URL or asset id
@@ -235,11 +229,14 @@ export type BooleanField = FormElementBase & {
   default?: boolean | null;
 };
 
-// Option
-export type Option = {
-  label: string;
-  value?: string;
-  hint?: string;
-  imageId?: string;
-  exclusive?: boolean; // "Other (please specify)" likes NOR
+export type UnknownElement = FormElementBase & {
+  type: "unknown";
 };
+
+// Text input element
+export type TextInputElement =
+  | ShortText
+  | LongText
+  | NumberField
+  | EmailField
+  | PhoneField;

@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { parse } from "../index";
+import { ParserEngine } from "../src/parseEngine";
 
 async function workspace() {
   // load sample text
@@ -9,8 +9,15 @@ async function workspace() {
     "utf8",
   );
   if (sample) {
-    const result = await parse(sample);
-    console.dir(result, { depth: null });
+    const _Engine = new ParserEngine(sample);
+    await _Engine.parse();
+
+    // debug output
+    fs.writeFileSync(
+      "debug-tree.json",
+      JSON.stringify(_Engine.form, null, 2),
+      "utf-8",
+    );
   } else {
     console.log("[--ERROR--] There is no sample file...");
   }
