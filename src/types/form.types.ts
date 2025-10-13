@@ -11,11 +11,9 @@ export type FormSettings = {
   limitResponses?: number | null;
   showProgressBar?: boolean;
   shuffleQuestions?: boolean;
-  theme?: {
-    color?: string;
-    backgroundImage?: string;
-    font?: string;
-  };
+  themeColor?: string;
+  backgroundImage?: string;
+  font?: string;
   responseReceipt?: "always" | "never" | "whenRequested";
 };
 

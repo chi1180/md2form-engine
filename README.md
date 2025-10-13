@@ -1,5 +1,7 @@
 # md2form
 
+![doc](https://md2form-document.pages.dev/)
+
 Markdownでフォーム定義を記述し、型安全なJSONに変換するパーサーライブラリです。
 見出しレベルでページ構造と質問を表現し、シンプルなハッシュ記法（`#key value`）で詳細設定を行います。
 
