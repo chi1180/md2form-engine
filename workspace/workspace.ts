@@ -14,7 +14,7 @@ async function workspace() {
 
     // debug output
     fs.writeFileSync(
-      "debug-tree.json",
+      "workspace.json",
       JSON.stringify(_Engine.form, null, 2),
       "utf-8",
     );
