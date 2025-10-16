@@ -18,6 +18,10 @@ async function workspace() {
       JSON.stringify(_Engine.form, null, 2),
       "utf-8",
     );
+
+    console.log(
+      `[--INFO--] #bun run workspace" result is [here](${path.join(__dirname, "workspace.json")})`,
+    );
   } else {
     console.log("[--ERROR--] There is no sample file...");
   }

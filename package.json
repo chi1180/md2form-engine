@@ -1,8 +1,8 @@
 {
   "name": "md2form",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "./src/index.ts",
-  "module": "index.ts",
+  "module": "./src/index.ts",
   "keywords": [
     "markdown",
     "form",
