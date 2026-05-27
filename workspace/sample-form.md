@@ -1,190 +1,222 @@
 ---
 collectEmail: true
 allowMultipleResponses: false
+limitResponses: 500
 showProgressBar: true
 shuffleQuestions: false
-themeColor: blue
-backgroundImage: mountain
 responseReceipt: whenRequested
+themeColor: "#2563EB"
+backgroundImage: mountain
+font: "Noto Sans JP, sans-serif"
 ---
 
-# サンプルフォーム
+# md2form Full Feature Playground
 
-このフォームは、すべての質問タイプを網羅するデモです。
+This sample includes all major question types and representative properties.
 
-## 基本情報セクション
+## Text Inputs
 
-個人情報に関する質問です。
-
-### お名前を入力してください
+### Short Text: Full Name
 
 #type short_text
 #placeholder "山田 太郎"
+#required true
+#maxLength 60
+#default ""
+#visible true
 
 ---
 
-### 自己紹介をお願いします
+### Long Text: Self Introduction
 
 #type long_text
-#placeholder "趣味や特技を書いてください"
-#rows 5
+#placeholder "自己紹介を入力してください"
+#rows 4
+#required false
+#maxLength 300
 
 ---
 
-### 年齢を入力してください
+### Number: Years of Experience
 
 #type number
+#placeholder "3"
+#required true
 #min 0
-#max 120
+#max 40
+#step 1
+#integerOnly true
 
 ---
 
-### メールアドレスを入力してください
+### Email: Contact Email
 
 #type email
-#placeholder "example@example.com"
+#placeholder "you@example.com"
+#required true
 
 ---
 
-### 電話番号を入力してください
+### Phone: Mobile Number
 
 #type phone
 #placeholder "090-1234-5678"
+#required false
 
 ---
 
-## 選択式セクション
+## Choice Inputs
 
-複数の選択肢形式を含みます。
-
-### 性別を選択してください
+### Dropdown: Preferred Work Style
 
 #type dropdown
-#options "男性","女性","その他"
+#options "Remote","Hybrid","Office"
+#searchable true
+#allowOther false
+#required true
 
 ---
 
-### 好きな飲み物を1つ選んでください
+### Radio: Preferred Contact Method
 
 #type radio
-#options "コーヒー","紅茶","水","その他"
+#options "Email","Phone","Chat"
+#allowOther false
+#required true
 
 ---
 
-### 興味のある分野をすべて選択してください
+### Checkbox: Skills
 
 #type checkbox
-#options "AI","ロボット","数学","芸術","その他"
+#options "TypeScript","React","Node.js","Design"
+#required true
+#minSelected 1
+#maxSelected 3
 
 ---
 
-## 日時セクション
+## Date and Time
 
-日付や時間に関する質問です。
-
-### 生年月日を入力してください
+### Date: Available Start Date
 
 #type date
-
-### 面談希望時間を選択してください
-
-#type time
-#minTime "09:00"
-#maxTime "18:00"
+#required true
+#includeTime false
+#minDate "2026-01-01"
+#maxDate "2027-12-31"
 
 ---
 
-## 評価セクション
+### Time: Preferred Interview Time
 
-スケールや評価関連です。
+#type time
+#required true
+#minTime "09:00"
+#maxTime "18:00"
+#stepMinutes 30
 
-### このサービスを星で評価してください
+---
+
+## Scale and Evaluation
+
+### Rating: Product Satisfaction
 
 #type rating
+#required true
 #scale 5
-#labels "低い","高い"
+#labels "不満","満足"
 #icon star
 
 ---
 
-### 授業の満足度をお答えください
+### Likert: Team Survey
 
 #type likert
-#statements "教材の分かりやすさ","講師の説明","演習量"
-#scaleLabels "全くそう思わない","あまりそう思わない","普通","そう思う","とてもそう思う"
+#required false
+#statements "目標が明確","協力しやすい","学習機会がある"
+#scaleLabels "全くそう思わない","そう思わない","普通","そう思う","とてもそう思う"
+#requiredPerStatement true
 
 ---
 
-### 週ごとの活動時間を記入してください
+### Matrix: Weekly Availability
 
 #type matrix
-#rows "月曜","火曜","水曜","木曜","金曜"
+#required false
+#rows "月","火","水","木","金"
 #columns "午前","午後","夜"
-#cellType number
+#cellType checkbox
+#requiredPerRow false
 
 ---
 
-### 英語スキルを自己評価してください
+### Scale: Confidence Level
 
 #type scale
+#required true
 #min 1
 #max 10
-#minLabel "初心者"
-#maxLabel "上級者"
+#step 1
+#minLabel "低い"
+#maxLabel "高い"
 
 ---
 
-## ファイル/署名セクション
+## Upload and Signature
 
-### 履歴書をアップロードしてください
+### File Upload: Portfolio
 
 #type file_upload
-#allowedTypes "pdf","docx"
-#maxFiles 1
-#maxSizeMB 10
+#required false
+#allowedTypes "pdf","docx","jpg","png"
+#maxFiles 3
+#maxSizeMB 20
 
 ---
 
-### サインをお願いします
+### Signature: Agreement
 
 #type signature
+#required true
 #captureMode draw
 
 ---
 
-## メディア/情報セクション
+## Media and Layout
 
-### 追加情報
-
-#type section_header
-#title "お知らせ"
-#subtitle "下記内容をご確認ください"
-
----
-
-### サンプル画像
+### Image: Company Logo
 
 #type image
-#src "https://example.com/sample.jpg"
-#alt "サンプル画像"
-#caption "説明用の画像です"
+#src "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab"
+#alt "Company logo"
+#width auto
+#height auto
+#caption "Sample image block"
 
 ---
 
-### サンプル動画
+### Video: Intro Clip
 
 #type video
-#src "https://example.com/sample.mp4"
-#caption "紹介動画です"
+#src "https://example.com/intro.mp4"
+#width auto
+#height auto
+#caption "Sample video block"
 
 ---
 
-## 最後の質問
-
-### このサービスをまた利用したいですか？
+### Boolean: Accept Terms
 
 #type boolean
-#onLabel "はい"
-#offLabel "いいえ"
+#required true
+#onLabel "同意する"
+#offLabel "同意しない"
 
 ---
+
+### Section Header: Additional Notes
+
+#type section_header
+#title "追加情報"
+#subtitle "必要に応じて補足を入力してください"

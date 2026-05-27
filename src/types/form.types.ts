@@ -1,8 +1,10 @@
 export type FormDocument = {
+  /** API / schema version (v2 = label-based, diagnostics) */
+  schemaVersion?: number;
   title: string;
   description?: string;
   settings?: FormSettings;
-  pages: Page[]; // Separated pages (for the sections of Google Forms)
+  pages: Page[];
 };
 
 export type FormSettings = {
@@ -17,17 +19,17 @@ export type FormSettings = {
   responseReceipt?: "always" | "never" | "whenRequested";
 };
 
-// Page (section)
 export type Page = {
   title?: string;
   description?: string;
-  elements: FormElement[]; // Ordered elements
+  elements: FormElement[];
 };
 
-// Same fields as FormElementBase
 export type FormElementBase = {
   type: ElementType;
+  /** Question title from ### heading */
   label?: string;
+  /** Supplementary text (not from ### heading) */
   description?: string;
   required?: boolean;
   visible?: boolean;
@@ -46,15 +48,14 @@ export type ElementType =
   | "time"
   | "rating"
   | "likert"
-  | "matrix" // Grid (row x column)
+  | "matrix"
   | "file_upload"
   | "section_header"
-  | "scale" // Number scale (e.g., 1-5)
+  | "scale"
   | "signature"
   | "image"
   | "video"
-  | "boolean" // yes/no toggle
-  | "unknown"; // Fallback for unknown types
+  | "boolean";
 
 export type FormElement =
   | ShortText
@@ -75,10 +76,7 @@ export type FormElement =
   | ScaleField
   | SignatureField
   | MediaField
-  | BooleanField
-  | UnknownElement;
-
-// --- Elements ---
+  | BooleanField;
 
 export type ShortText = FormElementBase & {
   type: "short_text";
@@ -91,6 +89,7 @@ export type LongText = FormElementBase & {
   type: "long_text";
   placeholder?: string;
   maxLength?: number;
+  rows?: number;
   default?: string;
   richText?: boolean;
 };
@@ -121,7 +120,7 @@ export type PhoneField = FormElementBase & {
 
 export type DropdownField = FormElementBase & {
   type: "dropdown";
-  options: string[];
+  options?: string[];
   allowOther?: boolean;
   multiple?: false;
   default?: string | null;
@@ -130,14 +129,14 @@ export type DropdownField = FormElementBase & {
 
 export type RadioField = FormElementBase & {
   type: "radio";
-  options: string[];
+  options?: string[];
   allowOther?: boolean;
   default?: string | null;
 };
 
 export type CheckboxField = FormElementBase & {
   type: "checkbox";
-  options: string[];
+  options?: string[];
   minSelected?: number | null;
   maxSelected?: number | null;
   default?: string[] | null;
@@ -146,14 +145,14 @@ export type CheckboxField = FormElementBase & {
 export type DateField = FormElementBase & {
   type: "date";
   includeTime?: boolean;
-  minDate?: string; // ISO
-  maxDate?: string; // ISO
+  minDate?: string;
+  maxDate?: string;
   default?: string | null;
 };
 
 export type TimeField = FormElementBase & {
   type: "time";
-  minTime?: string; // "HH:MM"
+  minTime?: string;
   maxTime?: string;
   stepMinutes?: number;
   default?: string | null;
@@ -161,7 +160,7 @@ export type TimeField = FormElementBase & {
 
 export type RatingField = FormElementBase & {
   type: "rating";
-  scale?: number; // e.g., 5
+  scale?: number;
   labels?: { low?: string; high?: string };
   default?: number | null;
   icon?: "star" | "heart" | "circle";
@@ -169,23 +168,23 @@ export type RatingField = FormElementBase & {
 
 export type LikertField = FormElementBase & {
   type: "likert";
-  statements: string[]; // Row (Estimate item)
-  scaleLabels: string[]; // Col (e.i., ["Strongly disagree", ..., "Strongly agree"])
+  statements?: string[];
+  scaleLabels?: string[];
   requiredPerStatement?: boolean;
 };
 
 export type MatrixField = FormElementBase & {
   type: "matrix";
-  rows: string[];
-  columns: string[];
+  rows?: string[];
+  columns?: string[];
   cellType?: "radio" | "checkbox" | "number" | "short_text";
   requiredPerRow?: boolean;
 };
 
 export type ScaleField = FormElementBase & {
   type: "scale";
-  min: number;
-  max: number;
+  min?: number;
+  max?: number;
   step?: number;
   minLabel?: string;
   maxLabel?: string;
@@ -194,7 +193,7 @@ export type ScaleField = FormElementBase & {
 
 export type FileUploadField = FormElementBase & {
   type: "file_upload";
-  allowedTypes?: string[]; // MIME or extension
+  allowedTypes?: string[];
   maxFiles?: number;
   maxSizeMB?: number;
 };
@@ -213,7 +212,7 @@ export type SectionHeader = FormElementBase & {
 
 export type MediaField = FormElementBase & {
   type: "image" | "video";
-  src: string; // URL or asset id
+  src?: string;
   alt?: string;
   width?: number | "auto";
   height?: number | "auto";
@@ -227,11 +226,6 @@ export type BooleanField = FormElementBase & {
   default?: boolean | null;
 };
 
-export type UnknownElement = FormElementBase & {
-  type: "unknown";
-};
-
-// Text input element
 export type TextInputElement =
   | ShortText
   | LongText

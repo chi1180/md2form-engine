@@ -1,205 +1,236 @@
 {
-  "title": "サンプルフォーム",
+  "title": "md2form Full Feature Playground",
   "pages": [
     {
-      "title": "基本情報セクション",
-      "description": "個人情報に関する質問です。",
+      "title": "Text Inputs",
+      "description": "",
       "elements": [
         {
           "type": "short_text",
-          "description": "お名前を入力してください",
-          "placeholder": "\"山田 太郎\""
+          "description": "Short Text: Full Name",
+          "placeholder": "山田 太郎",
+          "required": true,
+          "maxLength": 60,
+          "default": "",
+          "visible": true
         },
         {
           "type": "long_text",
-          "description": "自己紹介をお願いします",
-          "placeholder": "\"趣味や特技を書いてください\"",
-          "rows": [
-            "5"
-          ]
+          "description": "Long Text: Self Introduction",
+          "placeholder": "自己紹介を入力してください",
+          "required": false,
+          "maxLength": 300
         },
         {
           "type": "number",
-          "description": "年齢を入力してください",
+          "description": "Number: Years of Experience",
+          "placeholder": "3",
+          "required": true,
           "min": 0,
-          "max": 120
+          "max": 40,
+          "step": 1,
+          "integerOnly": true
         },
         {
           "type": "email",
-          "description": "メールアドレスを入力してください",
-          "placeholder": "\"example@example.com\""
+          "description": "Email: Contact Email",
+          "placeholder": "you@example.com",
+          "required": true
         },
         {
           "type": "phone",
-          "description": "電話番号を入力してください",
-          "placeholder": "\"090-1234-5678\""
+          "description": "Phone: Mobile Number",
+          "placeholder": "090-1234-5678",
+          "required": false
         }
       ]
     },
     {
-      "title": "選択式セクション",
-      "description": "複数の選択肢形式を含みます。",
+      "title": "Choice Inputs",
+      "description": "",
       "elements": [
         {
           "type": "dropdown",
-          "description": "性別を選択してください",
+          "description": "Dropdown: Preferred Work Style",
           "options": [
-            "\"男性\"",
-            "\"女性\"",
-            "\"その他\""
-          ]
+            "Remote",
+            "Hybrid",
+            "Office"
+          ],
+          "searchable": true,
+          "allowOther": false,
+          "required": true
         },
         {
           "type": "radio",
-          "description": "好きな飲み物を1つ選んでください",
+          "description": "Radio: Preferred Contact Method",
           "options": [
-            "\"コーヒー\"",
-            "\"紅茶\"",
-            "\"水\"",
-            "\"その他\""
-          ]
+            "Email",
+            "Phone",
+            "Chat"
+          ],
+          "allowOther": false,
+          "required": true
         },
         {
           "type": "checkbox",
-          "description": "興味のある分野をすべて選択してください",
+          "description": "Checkbox: Skills",
           "options": [
-            "\"AI\"",
-            "\"ロボット\"",
-            "\"数学\"",
-            "\"芸術\"",
-            "\"その他\""
-          ]
+            "TypeScript",
+            "React",
+            "Node.js",
+            "Design"
+          ],
+          "required": true,
+          "minSelected": 1,
+          "maxSelected": 3
         }
       ]
     },
     {
-      "title": "日時セクション",
-      "description": "日付や時間に関する質問です。",
+      "title": "Date and Time",
+      "description": "",
       "elements": [
         {
           "type": "date",
-          "description": "生年月日を入力してください"
+          "description": "Date: Available Start Date",
+          "required": true,
+          "includeTime": false,
+          "minDate": "2026-01-01",
+          "maxDate": "2027-12-31"
         },
         {
           "type": "time",
-          "description": "面談希望時間を選択してください",
-          "minTime": "\"09:00\"",
-          "maxTime": "\"18:00\""
+          "description": "Time: Preferred Interview Time",
+          "required": true,
+          "minTime": "09:00",
+          "maxTime": "18:00",
+          "stepMinutes": 30
         }
       ]
     },
     {
-      "title": "評価セクション",
-      "description": "スケールや評価関連です。",
+      "title": "Scale and Evaluation",
+      "description": "",
       "elements": [
         {
           "type": "rating",
-          "description": "このサービスを星で評価してください",
+          "description": "Rating: Product Satisfaction",
+          "required": true,
           "scale": 5,
           "labels": {
-            "low": "\"低い\"",
-            "high": "\"高い\""
+            "low": "不満",
+            "high": "満足"
           },
           "icon": "star"
         },
         {
           "type": "likert",
-          "description": "授業の満足度をお答えください",
+          "description": "Likert: Team Survey",
+          "required": false,
           "statements": [
-            "\"教材の分かりやすさ\"",
-            "\"講師の説明\"",
-            "\"演習量\""
+            "目標が明確",
+            "協力しやすい",
+            "学習機会がある"
           ],
           "scaleLabels": [
-            "\"全くそう思わない\"",
-            "\"あまりそう思わない\"",
-            "\"普通\"",
-            "\"そう思う\"",
-            "\"とてもそう思う\""
-          ]
+            "全くそう思わない",
+            "そう思わない",
+            "普通",
+            "そう思う",
+            "とてもそう思う"
+          ],
+          "requiredPerStatement": true
         },
         {
           "type": "matrix",
-          "description": "週ごとの活動時間を記入してください",
+          "description": "Matrix: Weekly Availability",
+          "required": false,
           "rows": [
-            "\"月曜\"",
-            "\"火曜\"",
-            "\"水曜\"",
-            "\"木曜\"",
-            "\"金曜\""
+            "月",
+            "火",
+            "水",
+            "木",
+            "金"
           ],
           "columns": [
-            "\"午前\"",
-            "\"午後\"",
-            "\"夜\""
+            "午前",
+            "午後",
+            "夜"
           ],
-          "cellType": "number"
+          "cellType": "checkbox",
+          "requiredPerRow": false
         },
         {
           "type": "scale",
-          "description": "英語スキルを自己評価してください",
+          "description": "Scale: Confidence Level",
+          "required": true,
           "min": 1,
           "max": 10,
-          "minLabel": "\"初心者\"",
-          "maxLabel": "\"上級者\""
+          "step": 1,
+          "minLabel": "低い",
+          "maxLabel": "高い"
         }
       ]
     },
     {
-      "title": "ファイル/署名セクション",
+      "title": "Upload and Signature",
       "description": "",
       "elements": [
         {
           "type": "file_upload",
-          "description": "履歴書をアップロードしてください",
+          "description": "File Upload: Portfolio",
+          "required": false,
           "allowedTypes": [
-            "\"pdf\"",
-            "\"docx\""
+            "pdf",
+            "docx",
+            "jpg",
+            "png"
           ],
-          "maxFiles": 1,
-          "maxSizeMB": 10
+          "maxFiles": 3,
+          "maxSizeMB": 20
         },
         {
           "type": "signature",
-          "description": "サインをお願いします",
+          "description": "Signature: Agreement",
+          "required": true,
           "captureMode": "draw"
         }
       ]
     },
     {
-      "title": "メディア/情報セクション",
+      "title": "Media and Layout",
       "description": "",
       "elements": [
         {
-          "type": "section_header",
-          "description": "追加情報",
-          "title": "\"お知らせ\"",
-          "subtitle": "\"下記内容をご確認ください\""
-        },
-        {
           "type": "image",
-          "description": "サンプル画像",
-          "src": "\"https://example.com/sample.jpg\"",
-          "alt": "\"サンプル画像\"",
-          "caption": "\"説明用の画像です\""
+          "description": "Image: Company Logo",
+          "src": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab",
+          "alt": "Company logo",
+          "width": "auto",
+          "height": "auto",
+          "caption": "Sample image block"
         },
         {
           "type": "video",
-          "description": "サンプル動画",
-          "src": "\"https://example.com/sample.mp4\"",
-          "caption": "\"紹介動画です\""
-        }
-      ]
-    },
-    {
-      "title": "最後の質問",
-      "description": "",
-      "elements": [
+          "description": "Video: Intro Clip",
+          "src": "https://example.com/intro.mp4",
+          "width": "auto",
+          "height": "auto",
+          "caption": "Sample video block"
+        },
         {
           "type": "boolean",
-          "description": "このサービスをまた利用したいですか？",
-          "onLabel": "\"はい\"",
-          "offLabel": "\"いいえ\""
+          "description": "Boolean: Accept Terms",
+          "required": true,
+          "onLabel": "同意する",
+          "offLabel": "同意しない"
+        },
+        {
+          "type": "section_header",
+          "description": "Section Header: Additional Notes",
+          "title": "追加情報",
+          "subtitle": "必要に応じて補足を入力してください"
         }
       ]
     }
@@ -207,11 +238,13 @@
   "settings": {
     "collectEmail": true,
     "allowMultipleResponses": false,
+    "limitResponses": 500,
     "showProgressBar": true,
     "shuffleQuestions": false,
-    "themeColor": "blue",
+    "responseReceipt": "whenRequested",
+    "themeColor": "#2563EB",
     "backgroundImage": "mountain",
-    "responseReceipt": "whenRequested"
+    "font": "Noto Sans JP, sans-serif"
   },
-  "description": "このフォームは、すべての質問タイプを網羅するデモです。"
+  "description": "This sample includes all major question types and representative properties."
 }
