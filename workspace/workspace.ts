@@ -1,31 +1,19 @@
 import fs from "node:fs";
 import path from "node:path";
-import { ParserEngine } from "../src/parseEngine";
+import { parseForm } from "../src/api/parseForm";
 
-async function workspace() {
-  // load sample text
-  const sample = fs.readFileSync(
-    path.join(__dirname, "sample-form.md"),
-    "utf8",
-  );
-  if (sample) {
-    const _Engine = new ParserEngine(sample);
-    await _Engine.parse();
+const samplePath = path.join(import.meta.dir, "sample-form.md");
+const outPath = path.join(import.meta.dir, "workspace.json");
 
-    // debug output
-    fs.writeFileSync(
-      "workspace.json",
-      JSON.stringify(_Engine.form, null, 2),
-      "utf-8",
-    );
+const sample = fs.readFileSync(samplePath, "utf8");
+const result = parseForm(sample, { strict: false, validateSettings: true });
 
-    console.log(
-      `[--INFO--] #bun run workspace" result is [here](${path.join(__dirname, "workspace.json")})`,
-    );
-  } else {
-    console.log("[--ERROR--] There is no sample file...");
+fs.writeFileSync(outPath, JSON.stringify(result, null, 2), "utf-8");
+
+console.log(`[md2form] wrote ${outPath}`);
+console.log(`[md2form] ok=${result.ok} diagnostics=${result.diagnostics.length}`);
+if (result.diagnostics.length > 0) {
+  for (const d of result.diagnostics) {
+    console.log(`  [${d.severity}] ${d.code}: ${d.message}`);
   }
 }
-
-// run
-workspace();

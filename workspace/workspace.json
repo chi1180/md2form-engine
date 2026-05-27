@@ -1,0 +1,250 @@
+{
+  "document": {
+    "schemaVersion": 2,
+    "title": "md2form Full Feature Playground",
+    "pages": [
+      {
+        "title": "Text Inputs",
+        "elements": [
+          {
+            "type": "short_text",
+            "label": "Short Text: Full Name",
+            "placeholder": "山田 太郎",
+            "required": true,
+            "maxLength": 60,
+            "default": "",
+            "visible": true
+          },
+          {
+            "type": "long_text",
+            "label": "Long Text: Self Introduction",
+            "placeholder": "自己紹介を入力してください",
+            "rows": 4,
+            "required": false,
+            "maxLength": 300
+          },
+          {
+            "type": "number",
+            "label": "Number: Years of Experience",
+            "placeholder": "3",
+            "required": true,
+            "min": 0,
+            "max": 40,
+            "step": 1,
+            "integerOnly": true
+          },
+          {
+            "type": "email",
+            "label": "Email: Contact Email",
+            "placeholder": "you@example.com",
+            "required": true
+          },
+          {
+            "type": "phone",
+            "label": "Phone: Mobile Number",
+            "placeholder": "090-1234-5678",
+            "required": false
+          }
+        ]
+      },
+      {
+        "title": "Choice Inputs",
+        "elements": [
+          {
+            "type": "dropdown",
+            "label": "Dropdown: Preferred Work Style",
+            "options": [
+              "Remote",
+              "Hybrid",
+              "Office"
+            ],
+            "searchable": true,
+            "allowOther": false,
+            "required": true
+          },
+          {
+            "type": "radio",
+            "label": "Radio: Preferred Contact Method",
+            "options": [
+              "Email",
+              "Phone",
+              "Chat"
+            ],
+            "allowOther": false,
+            "required": true
+          },
+          {
+            "type": "checkbox",
+            "label": "Checkbox: Skills",
+            "options": [
+              "TypeScript",
+              "React",
+              "Node.js",
+              "Design"
+            ],
+            "required": true,
+            "minSelected": 1,
+            "maxSelected": 3
+          }
+        ]
+      },
+      {
+        "title": "Date and Time",
+        "elements": [
+          {
+            "type": "date",
+            "label": "Date: Available Start Date",
+            "required": true,
+            "includeTime": false,
+            "minDate": "2026-01-01",
+            "maxDate": "2027-12-31"
+          },
+          {
+            "type": "time",
+            "label": "Time: Preferred Interview Time",
+            "required": true,
+            "minTime": "09:00",
+            "maxTime": "18:00",
+            "stepMinutes": 30
+          }
+        ]
+      },
+      {
+        "title": "Scale and Evaluation",
+        "elements": [
+          {
+            "type": "rating",
+            "label": "Rating: Product Satisfaction",
+            "required": true,
+            "scale": 5,
+            "labels": {
+              "low": "不満",
+              "high": "満足"
+            },
+            "icon": "star"
+          },
+          {
+            "type": "likert",
+            "label": "Likert: Team Survey",
+            "required": false,
+            "statements": [
+              "目標が明確",
+              "協力しやすい",
+              "学習機会がある"
+            ],
+            "scaleLabels": [
+              "全くそう思わない",
+              "そう思わない",
+              "普通",
+              "そう思う",
+              "とてもそう思う"
+            ],
+            "requiredPerStatement": true
+          },
+          {
+            "type": "matrix",
+            "label": "Matrix: Weekly Availability",
+            "required": false,
+            "rows": [
+              "月",
+              "火",
+              "水",
+              "木",
+              "金"
+            ],
+            "columns": [
+              "午前",
+              "午後",
+              "夜"
+            ],
+            "cellType": "checkbox",
+            "requiredPerRow": false
+          },
+          {
+            "type": "scale",
+            "label": "Scale: Confidence Level",
+            "required": true,
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "minLabel": "低い",
+            "maxLabel": "高い"
+          }
+        ]
+      },
+      {
+        "title": "Upload and Signature",
+        "elements": [
+          {
+            "type": "file_upload",
+            "label": "File Upload: Portfolio",
+            "required": false,
+            "allowedTypes": [
+              "pdf",
+              "docx",
+              "jpg",
+              "png"
+            ],
+            "maxFiles": 3,
+            "maxSizeMB": 20
+          },
+          {
+            "type": "signature",
+            "label": "Signature: Agreement",
+            "required": true,
+            "captureMode": "draw"
+          }
+        ]
+      },
+      {
+        "title": "Media and Layout",
+        "elements": [
+          {
+            "type": "image",
+            "label": "Image: Company Logo",
+            "src": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab",
+            "alt": "Company logo",
+            "width": "auto",
+            "height": "auto",
+            "caption": "Sample image block"
+          },
+          {
+            "type": "video",
+            "label": "Video: Intro Clip",
+            "src": "https://example.com/intro.mp4",
+            "width": "auto",
+            "height": "auto",
+            "caption": "Sample video block"
+          },
+          {
+            "type": "boolean",
+            "label": "Boolean: Accept Terms",
+            "required": true,
+            "onLabel": "同意する",
+            "offLabel": "同意しない"
+          },
+          {
+            "type": "section_header",
+            "label": "Section Header: Additional Notes",
+            "title": "追加情報",
+            "subtitle": "必要に応じて補足を入力してください"
+          }
+        ]
+      }
+    ],
+    "description": "This sample includes all major question types and representative properties.",
+    "settings": {
+      "collectEmail": true,
+      "allowMultipleResponses": false,
+      "limitResponses": 500,
+      "showProgressBar": true,
+      "shuffleQuestions": false,
+      "responseReceipt": "whenRequested",
+      "themeColor": "#2563EB",
+      "backgroundImage": "mountain",
+      "font": "Noto Sans JP, sans-serif"
+    }
+  },
+  "diagnostics": [],
+  "ok": true
+}

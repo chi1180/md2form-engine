@@ -2,25 +2,25 @@
 
 [Documentation 🚀](https://md2form-document.pages.dev/)
 
-Markdownでフォーム定義を記述し、型安全なJSONに変換するパーサーライブラリです。
-見出しレベルでページ構造と質問を表現し、シンプルなハッシュ記法（`#key value`）で詳細設定を行います。
+A parser library that lets you define forms in Markdown and converts them into type-safe JSON.
+Express page structure and questions using heading levels, and set details via simple hash notation (`#key value`).
 
-## 主な特徴
+## Key Features
 
-- **シンプルな記法**: Markdownの見出しと段落だけでフォーム構造を定義
-- **型安全**: TypeScriptの型定義（`FormDocument`）で変換結果を安全に扱える
-- **豊富な質問タイプ**: テキスト入力から評価スケール、ファイルアップロードまで幅広くサポート
-- **フロントマター対応**: YAMLでフォーム全体の設定を管理
+- **Simple notation**: Define form structure with just Markdown headings and paragraphs
+- **Type-safe**: TypeScript type definitions (`FormDocument`) for safe handling of conversion results
+- **Rich question types**: Support everything from text input to rating scales and file uploads
+- **Frontmatter support**: Manage form-wide settings via YAML
 
-## インストール
+## Installation
 
 ```bash
 npm install md2form
-# または
+# or
 bun add md2form
 ```
 
-開発環境では[Bun](https://bun.sh) v1.2.18+を推奨します。
+Development environment recommends [Bun](https://bun.sh) v1.2.18+.
 
 ```bash
 git clone <repository>
@@ -28,12 +28,12 @@ cd md2form
 bun install
 ```
 
-## 基本的な使い方
+## Basic Usage
 
-### ライブラリとして使用
+### As a Library (v2)
 
 ```typescript
-import { parseMarkdownToForm } from "md2form";
+import { parseForm, isParsedDocument } from "md2form";
 
 const markdown = `
 ---
@@ -41,37 +41,47 @@ collectEmail: true
 showProgressBar: true
 ---
 
-# お問い合わせフォーム
-簡単なアンケートです。
+# Contact Form
+Simple survey.
 
-## 基本情報
-### お名前
+## Basic Info
+### Your Name
 #type short_text
-#placeholder "山田 太郎"
+#placeholder "John Doe"
 #required true
 
-### 年齢
+### Age
 #type number
 #min 0
 #max 120
 `;
 
-const form = await parseMarkdownToForm(markdown);
-console.log(form.title); // "お問い合わせフォーム"
+const result = parseForm(markdown, { strict: true, validateSettings: true });
+
+if (!isParsedDocument(result)) {
+  console.error(result.diagnostics);
+  throw new Error("Invalid form markdown");
+}
+
+const form = result.document;
+console.log(form.title); // "Contact Form"
 console.log(form.pages[0].elements[0].type); // "short_text"
+console.log(form.pages[0].elements[0].label); // "Your Name"
 ```
 
-### サンプルの実行
+`parseMarkdownToForm` is a v1-compatible deprecated API (returns `document` only). Use `parseForm` for new code.
+
+### Running Samples
 
 ```bash
 bun run workspace
 ```
 
-このコマンドで`workspace/sample-form.md`をパースし、結果を`workspace.json`に出力します。
+This parses `workspace/sample-form.md` and outputs the result to `workspace/workspace.json`.
 
-## Markdownスキーマ
+## Markdown Schema
 
-### 基本構造
+### Basic Structure
 
 ```markdown
 ---
@@ -80,95 +90,95 @@ collectEmail: true
 showProgressBar: true
 ---
 
-# フォームタイトル（必須）
+# Form Title (required)
 
-フォームの説明文（任意）
+Form description (optional)
 
-## セクション1
+## Section 1
 
-セクションの説明（任意）
+Section description (optional)
 
-### 質問1
+### Question 1
 
 #type short_text
-#placeholder "入力例"
+#placeholder "Example input"
 #required true
 
-### 質問2
+### Question 2
 
 #type radio
-#options "選択肢1","選択肢2","選択肢3"
+#options "Option1","Option2","Option3"
 
-## セクション2
+## Section 2
 
-### 質問3
+### Question 3
 
 #type number
 #min 1
 #max 10
 ```
 
-### 構造のルール
+### Structure Rules
 
-1. **フォームタイトル**: 最初の`# 見出し`がフォームタイトルになる
-2. **セクション**: `## 見出し`で新しいページ（セクション）を作成
-3. **質問**: `### 見出し`で質問を定義
-4. **プロパティ**: 質問直後の段落に`#key value`形式で設定を記述
+1. **Form Title**: First `# heading` becomes the form title
+2. **Section**: `## heading` creates a new page (section)
+3. **Question**: `### heading` defines a question
+4. **Properties**: Write settings after question using `#key value` format in the paragraph
 
-## サポートされる質問タイプ
+## Supported Question Types
 
-### テキスト入力系
+### Text Input
 
-- `short_text`: 1行テキスト
-- `long_text`: 複数行テキスト
-- `number`: 数値入力
-- `email`: メールアドレス
-- `phone`: 電話番号
+- `short_text`: Single-line text
+- `long_text`: Multi-line text
+- `number`: Numeric input
+- `email`: Email address
+- `phone`: Phone number
 
-### 選択系
+### Selection
 
-- `dropdown`: ドロップダウン
-- `radio`: ラジオボタン（単一選択）
-- `checkbox`: チェックボックス（複数選択）
+- `dropdown`: Dropdown menu
+- `radio`: Radio buttons (single choice)
+- `checkbox`: Checkboxes (multiple choice)
 
-### 日時系
+### Date/Time
 
-- `date`: 日付
-- `time`: 時刻
+- `date`: Date picker
+- `time`: Time picker
 
-### 評価・スケール系
+### Rating/Scale
 
-- `rating`: 星評価
-- `likert`: リッカート尺度
-- `matrix`: マトリクス（行×列）
-- `scale`: スライダー
+- `rating`: Star rating
+- `likert`: Likert scale
+- `matrix`: Matrix (rows × columns)
+- `scale`: Slider
 
-### その他
+### Other
 
-- `file_upload`: ファイルアップロード
-- `signature`: 署名
-- `boolean`: Yes/No選択
-- `section_header`: セクション見出し（表示のみ）
-- `image`: 画像表示
-- `video`: 動画表示
+- `file_upload`: File upload
+- `signature`: Signature pad
+- `boolean`: Yes/No choice
+- `section_header`: Section header (display only)
+- `image`: Image display
+- `video`: Video display
 
-## プロパティ一覧
+## Property List
 
-### 共通プロパティ
+### Common Properties
 
 ```markdown
-#required true # 必須入力
-#visible false # 表示/非表示
+#required true # Required field
+#visible false # Show/hide
 ```
 
-### テキスト系
+### Text Properties
 
 ```markdown
-#placeholder "入力例"
+#placeholder "Example"
 #maxLength 100
 ```
 
-### 数値系
+### Numeric Properties
 
 ```markdown
 #min 0
@@ -176,29 +186,29 @@ showProgressBar: true
 #step 5
 ```
 
-### 選択系
+### Selection Properties
 
 ```markdown
-#options "選択肢1","選択肢2","選択肢3"
+#options "Option1","Option2","Option3"
 #allowOther true
 ```
 
-### 時刻系
+### Time Properties
 
 ```markdown
 #minTime "09:00"
 #maxTime "18:00"
 ```
 
-### 評価系
+### Rating Properties
 
 ```markdown
 #scale 5
-#labels "低い","高い"
+#labels "Low","High"
 #icon star
 ```
 
-### ファイル系
+### File Properties
 
 ```markdown
 #allowedTypes "pdf","docx"
@@ -206,19 +216,19 @@ showProgressBar: true
 #maxSizeMB 10
 ```
 
-## フロントマター設定
+## Frontmatter Configuration
 
 ```yaml
 ---
-collectEmail: true # メールアドレス収集
-allowMultipleResponses: false # 複数回答許可
-showProgressBar: true # プログレスバー表示
-shuffleQuestions: false # 質問順をシャッフル
-responseReceipt: "whenRequested" # 回答受領通知
+collectEmail: true # Collect email address
+allowMultipleResponses: false # Allow multiple responses
+showProgressBar: true # Show progress bar
+shuffleQuestions: false # Randomize question order
+responseReceipt: "whenRequested" # Response receipt notification
 ---
 ```
 
-## 変換結果の型定義
+## Conversion Result Types
 
 ```typescript
 type FormDocument = {
@@ -235,49 +245,49 @@ type Page = {
 };
 
 type FormElement = ShortText | NumberField | RadioField | CheckboxField;
-// ... その他の型
+// ... other types
 ```
 
-詳細な型定義は`src/types/form.types.ts`を参照してください。
+See `src/types/form.types.ts` for detailed type definitions.
 
-## 実装例
+## Implementation Examples
 
-### 完全なフォーム例
+### Complete Form Example
 
-`workspace/sample-form.md`に、すべての質問タイプを含む完全なサンプルがあります。
+`workspace/sample-form.md` contains a complete sample with all question types.
 
-### カスタムパーサーの作成
+### Batch Processing (Processor Reuse)
 
 ```typescript
-import { ParserEngine } from "md2form/src/parseEngine";
+import { createParser } from "md2form";
 
-const engine = new ParserEngine(markdownContent);
-await engine.parse();
-const formData = engine.form;
+const parser = createParser({ strict: false });
+const result = parser.parse(markdownContent);
 ```
 
-## 制限事項・注意点
+## Limitations / Notes
 
-- プロパティ値のダブルクォートは現在そのまま保持されます
-- 質問プロパティは`### 質問`の直後の段落に記述する必要があります
-- リッチなMarkdown（リストや強調など）は説明文では限定的にサポート
-- `unknown`タイプは内部的なプレースホルダーです
+- Question properties must be written in the paragraph immediately after `### question`
+- Parse issues are reported in `ParseResult.diagnostics` (enable failure detection via `strict: true` for CI)
+- Question heading text is stored in the `label` field (changed from v1's `description`)
+- Strong/link text in headings is normalized to plain text before interpretation
 
-## 開発・貢献
+See [API-DESIGN.md](./API-DESIGN.md) for detailed API design and [PROBLEMS.md](./PROBLEMS.md) for known issues.
+
+## Development / Contributing
 
 ```bash
-# 開発環境のセットアップ
+# Development environment setup
 git clone <repository>
 cd md2form
 bun install
 
-# サンプルの実行とテスト
+# Run samples and tests
 bun run workspace
-
-# 型チェック
-bun run tsc --noEmit
+bun test
+bun run typecheck
 ```
 
-## ライセンス
+## License
 
 MIT License

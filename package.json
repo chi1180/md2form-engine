@@ -1,6 +1,6 @@
 {
   "name": "md2form",
-  "version": "1.1.7",
+  "version": "2.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -23,6 +23,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts --sourcemap --clean --out-dir dist",
+    "test": "bun test tests/",
+    "typecheck": "tsc --noEmit",
     "workspace": "bun ./workspace/workspace.ts",
     "prepublishOnly": "bun run build"
   },
